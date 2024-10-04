@@ -1,0 +1,143 @@
+---
+- hosts:
+  - localhost
+  vars:
+    its_defaultsoftware:
+      apt:
+      - ca-certificates
+      - gimp
+      - vlc
+    its_mde:
+      defender_group_tag: ITSC-TEST
+      exclude:
+        directories:
+        - /proc
+        - /sys
+        - /dev
+        files: []
+    dmi_cleanup:
+      execute: true
+      until: "2025-01-31"
+      comment: some arbitrary string
+      private: '{{ lccms.manage }}'
+      complex:
+        one: 1
+        two:
+        - first
+        - second
+        - third
+        three:
+          ok: 1
+          nope:
+            perhaps: 0
+            definitive: true
+          oversized: This is a very long text which should be shown in its full length.
+      text: |
+        This is just a block of nl separated text:
+        The quick brown fox jumps over the lazy dog.
+        And to round it up, one last line <äöü>.
+    its_sssd:
+      users_allow: passwd
+      denied_ad_groups: ~
+      allowed_ad_groups: UNI-TEST
+      allowed_ad_users: ~
+      ldap_user_gid_number: gidNumber
+    its_groups:
+      groups:
+      - name: unibas-users
+        gidnumber: 1111
+      - name: stud
+        gidnumber: 1183
+      - name: dmi-dmi
+        gidnumber: 1355
+      - name: dmi-admin_fbm
+        gidnumber: 1469
+      - name: dmi-admin_fbi
+        gidnumber: 1468
+      - name: dmi-admin
+        gidnumber: 1458
+      - name: dmi-fbi
+        gidnumber: 1767
+      - name: dmi-fbm
+        gidnumber: 1766
+      - name: dmi-admin_wiki
+        gidnumber: 1470
+      - name: dmi-sec_fbi
+        gidnumber: 1478
+      - name: dmi-admin_it
+        gidnumber: 1373
+      - name: dmi-stud_fbm
+        gidnumber: 1474
+      - name: dmi-assistent
+        gidnumber: 1476
+      - name: dmi-sec_fbm
+        gidnumber: 1479
+      - name: dmi-ga
+        gidnumber: 1465
+      - name: dmi-sec
+        gidnumber: 1459
+      - name: dmi-adm
+        gidnumber: 1869
+      - name: dmi-admin_web
+        gidnumber: 1471
+      - name: dmi-professor
+        gidnumber: 1460
+      - name: ifi
+        gidnumber: 1178
+      - name: math
+        gidnumber: 1158
+    lccms:
+      configURI: https://lccmsd.its.unibas.ch/configs/
+      requestURI: https://lccmsd.its.unibas.ch/
+      rolesURI: https://lccmsd.its.unibas.ch/roles/
+      ansibleDir: /usr/.ansible
+      ansibleDirMode: "0700"
+      localadminPwHash: ~
+      localadminSshKeys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBdF1rJHOPqtD70psSY+6FKhWXvyr24066pXmQNG3M1s
+        jerman0000@kb-kbbp01-pdm22.pz.unibas.ch
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKMRG/GOLElALlgHqBIHD/DxVbUksLZmiE5BO5qUzO0F
+        frank@dmi-pepper.dmi.unibas.ch
+      department: ~
+      group: ~
+      reportMailTo: ~
+      host: its-test.its.unibas.ch
+      unit: local
+      computerType: mobile
+      configuration: managed
+      trequesturi: https://lccmsd.its.unibas.ch/
+      unitlist: dmi,dmi/fbi,dmi/fbm,jbh,jbh/dsbg,jbh/europa,jbh/jus,jbh/phi,jbh/wwz,klb,klb/bz,klb/bz/bioemlab,klb/bz/imcf,klb/bz/struct,klb/dpw,klb/its,klb/itsc,klb/mcf,local
+      os: ubuntu
+      release: "22.04"
+    ad:
+      ou: ou=NUX,ou=Computers,ou=TEST,ou=ITSC-JBH,dc=unibasel,dc=ads,dc=unibas,dc=ch
+  roles:
+  - its.ansible
+  - its.ssh
+  - its.cleanup
+  - its.cloud
+  - its.defaultsoftware
+  - its.etckeeper
+  - its.localadmin
+  - its.root
+  - its.login
+  - its.mde
+  - its.mta
+  - its.ntp
+  - its.restartnotify
+  - its.setfqdn
+  - its.uniprint
+  - its.syslog
+  - its.updates
+  - its.adbind
+  - its.globalprotect
+  - dmi.cleanup
+  - its.diskencryption
+  - its.firefox
+  - its.zoom
+  - its.firewall
+  - its.sssd
+  - its.groups
+  - its.users
+  - its.report
+...

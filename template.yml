@@ -1,0 +1,58 @@
+---
+- hosts:
+  - localhost
+  vars:
+    ad:
+      ou: ou=NUX,ou=Computers,ou=TEST,ou=ITSC-JBH,dc=unibasel,dc=ads,dc=unibas,dc=ch
+    its_mde:
+      defender_group_tag: ITSC-TEST
+    its_sssd:
+      users_allow: passwd
+      allowed_ad_groups: UNI-TEST
+    its_groups:
+      groups:
+      - name: dmi-dmi
+        gidnumber: 1355
+      - name: dmi-admin_fbm
+        gidnumber: 1469
+      - name: dmi-admin_fbi
+        gidnumber: 1468
+      - name: dmi-admin
+        gidnumber: 1458
+      - name: dmi-fbi
+        gidnumber: 1767
+      - name: dmi-fbm
+        gidnumber: 1766
+      - name: dmi-admin_wiki
+        gidnumber: 1470
+      - name: dmi-sec_fbi
+        gidnumber: 1478
+      - name: dmi-admin_it
+        gidnumber: 1373
+      - name: dmi-stud_fbm
+        gidnumber: 1474
+      - name: dmi-assistent
+        gidnumber: 1476
+      - name: dmi-sec_fbm
+        gidnumber: 1479
+      - name: dmi-ga
+        gidnumber: 1465
+      - name: dmi-sec
+        gidnumber: 1459
+      - name: dmi-adm
+        gidnumber: 1869
+      - name: dmi-admin_web
+        gidnumber: 1471
+      - name: dmi-professor
+        gidnumber: 1460
+      - name: ifi
+        gidnumber: 1178
+      - name: math
+        gidnumber: 1158
+    dmi_cleanup:
+      execute: true
+      until: "2025-01-31"
+  roles:
+  - test.cleanup
+  - '@nested@'
+...
