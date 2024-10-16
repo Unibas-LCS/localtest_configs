@@ -49,9 +49,13 @@
         gidnumber: 1178
       - name: math
         gidnumber: 1158
-    dmi_cleanup:
+    test_cleanup:
       execute: true
       until: "2025-01-31"
+    its_defaultsoftware:
+      apt:
+        - vim
+        - oneapp
   roles:
   - test.cleanup
   - '@nested@'
